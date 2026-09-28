@@ -126,7 +126,7 @@ body {
 .valentines-day:hover .heart { transform: translateY(-50px) rotate(-45deg); }
 .valentines-day:hover .text { transform: translateY(-50px); }
 
-/* --- ESTILOS DE LA CARTA (VISTA ORIGINAL PC COMPUTADORA) --- */
+/* --- ESTILOS DE LA CARTA (VISTA PC COMPUTADORA) --- */
 #card {
    height: 520px;
    width: 820px;
@@ -145,7 +145,7 @@ body {
 #card.open {
    visibility: visible;
    opacity: 1;
-   transform: translate(-50%, -50%) scale(1);
+   transform: translate(-50%, -50%) scale(1); /* Abre centrado y normal en PC */
 }
 
 .side {
@@ -157,10 +157,9 @@ body {
    display: flex;
    flex-direction: column;
    justify-content: center;
-   position: relative; /* Clave para que la firma y el girasol no se amontonen */
+   position: relative;
 }
 
-/* AQUÍ ESTÁN LAS INCLINACIONES 3D QUE SE MANTENDRÁN EN EL TELÉFONO */
 .side.one {
    width: 410px;
    transform: skew(10deg, 20deg);
@@ -190,9 +189,9 @@ body {
    margin: 5px 0;
 }
 
-/* SEPARACIÓN EXACTA DE LA FIRMA */
+/* SEPARACIÓN DE LA FIRMA (ABAJO A LA IZQUIERDA EN LA PÁGINA) */
 #card .signature {
-   text-align: left; /* Firma a la izquierda de la hoja derecha */
+   text-align: left;
    font-size: 1.3em;
    color: #ff4747;
    margin-top: 25px;
@@ -200,11 +199,11 @@ body {
    padding-left: 10px;
 }
 
-/* SEPARACIÓN EXACTA DEL GIRASOL FLOATING A LA DERECHA */
+/* SEPARACIÓN DEL GIRASOL (ABAJO A LA DERECHA EN LA PÁGINA) */
 .sunflower-decor {
    position: absolute;
    bottom: 15px;
-   right: 25px; /* Empujado totalmente a la esquina derecha */
+   right: 25px;
    width: 70px;
    height: auto;
    pointer-events: none;
@@ -218,52 +217,33 @@ body {
 }
 
 /* ==========================================================================
-   NUEVA ADAPTACIÓN ELÁSTICA PARA TELÉFONOS (MANTIENE EL 3D SKEW EN HORIZONTAL)
+   ADAPTACIÓN TELEFÓNICA DEFINITIVA (MANTIENE EL 3D DERECHO Y CENTRADO)
    ========================================================================== */
 @media screen and (max-width: 768px) {
-   body {
-      align-items: center;
-      justify-content: center;
-   }
-
-   /* Escalamos el sobre exterior en el celular */
    .valentines-day {
       transform: scale(0.65);
    }
 
-   /* OBLIGAMOS A LA CARTA A VERSE DE LADO EN 3D ENCOGIDA PARA QUE QUEPA PERFECTO */
+   /* SE QUITA LA ROTACIÓN: Ahora abre completamente recta y centrada en el celular */
    #card {
-      width: 92vw; /* Ajusta el ancho total al 92% de la pantalla del celular */
-      height: calc(92vw * 0.63); /* Proporción matemática perfecta para que no se deforme */
+      width: 820px;  /* Mantiene los anchos fijos reales para que no colapse el texto */
+      height: 520px; /* Mantiene la proporción exacta de tu computadora */
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.1); 
    }
 
-   /* Ajustamos los tamaños de texto en base a la pantalla del móvil para que no se amontonen */
-   #card h2 { font-size: 5.5vw; }
-   #card p { font-size: 2.1vw; line-height: 1.35; margin: 3px 0; }
-   
-   .side {
-      width: 46vw !important; /* Cada página toma la mitad del libro */
-      padding: 3vw 2vw;
+   /* Encoge todo el libro elásticamente para adaptarlo a las pantallas móviles sin perder el 3D */
+   #card.open {
+      transform: translate(-50%, -50%) scale(0.44) !important; 
    }
 
-   /* Mantiene intactas las inclinaciones 3D originales de tu computadora */
+   /* Conserva todas las inclinaciones tridimensionales de las hojas en el móvil */
    .side.one {
       transform: skew(10deg, 20deg) !important;
    }
 
    .side.two {
       transform: skew(10deg, -15deg) !important;
-   }
-
-   #card .signature {
-      font-size: 2.5vw;
-      margin-top: 4vw;
-      padding-left: 1vw;
-   }
-
-   .sunflower-decor {
-      width: 8vw; /* El girasol se encoge proporcionalmente */
-      bottom: 2vw;
-      right: 3vw;
    }
 }
