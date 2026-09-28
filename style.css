@@ -126,7 +126,7 @@ body {
 .valentines-day:hover .heart { transform: translateY(-50px) rotate(-45deg); }
 .valentines-day:hover .text { transform: translateY(-50px); }
 
-/* --- ESTILOS DE LA CARTA (PANTALLA GRANDE) --- */
+/* --- ESTILOS DE LA CARTA (PARA COMPUTADORA) --- */
 #card {
    height: 520px;
    width: 820px;
@@ -161,13 +161,14 @@ body {
 }
 
 .side.one {
-   width: 320px;
-   transform: skew(10deg,20deg);
+   width: 410px;
+   transform: skew(10deg, 20deg);
    background: linear-gradient(90deg, #fff, #fff 40%, #ddd);
 }
 
 .side.two {
-   transform: skew(10deg,-15deg);
+   width: 410px;
+   transform: skew(10deg, -15deg);
    background: linear-gradient(-90deg, #fff, #fff 40%, #f0f0f0);
 }
 
@@ -196,7 +197,6 @@ body {
    font-weight: bold;
 }
 
-/* POSICIONAMIENTO DEL GIRASOL EN PC */
 .sunflower-decor {
    position: absolute;
    bottom: 15px;
@@ -214,52 +214,60 @@ body {
 }
 
 /* ==========================================================================
-   DISEÑO ADAPTABLE PARA CUALQUIER SMARTPHONE (IPHONE / ANDROID)
+   ADAPTACIÓN CORRECTA PARA PANTALLAS MÓVILES (IPHONE Y ANDROID)
    ========================================================================== */
 @media screen and (max-width: 768px) {
    body {
-      align-items: flex-start;
-      overflow-y: auto;
-      padding: 30px 15px;
+      align-items: center; /* Mantiene centrado vertical en móvil */
+      justify-content: center;
+      padding: 10px;
       box-sizing: border-box;
    }
 
-   /* Reduce el tamaño del sobre en teléfonos */
+   /* Escalamos el sobre exterior en el celular */
    .valentines-day {
-      transform: scale(0.72) translateY(30px);
+      transform: scale(0.7) translateY(-20px);
    }
 
-   /* Convierte las páginas de horizontal a vertical */
+   /* Reacomodamos la carta para que no se salga de los bordes */
    #card {
-      width: 95%;
-      height: auto;
-      flex-direction: column;
-      position: relative;
-      top: 0;
-      left: 0;
-      transform: scale(0.1);
-      margin: 0 auto;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      width: 90vw; /* Usa el ancho real del teléfono */
+      height: 85vh; /* Se adapta a la altura disponible */
+      flex-direction: column; /* Una hoja arriba y otra abajo */
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.1);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      overflow-y: auto; /* Permite hacer scroll interno si el texto es largo */
    }
 
    #card.open {
-      transform: scale(1);
+      transform: translate(-50%, -50%) scale(1);
    }
 
    .side {
       width: 100% !important;
       height: auto !important;
-      transform: none !important; /* Quita inclinaciones oblicuas en el celular */
+      min-height: 45%;
+      transform: none !important; /* APAGAMOS LOS SKEWS EN CELULAR PARA ALINEAR TODO CORRECTAMENTE */
       padding: 25px 20px;
       background: #ffffff !important;
-      border-radius: 8px;
-      margin-bottom: 12px;
+      box-sizing: border-box;
+   }
+   
+   .side.one {
+      border-bottom: 2px dashed #ddd; /* Separador sutil simulando el pliegue */
+      border-radius: 8px 8px 0 0;
    }
 
-   #card h2 { font-size: 2.2em; margin-bottom: 5px; }
+   .side.two {
+      border-radius: 0 0 8px 8px;
+   }
+
+   #card h2 { font-size: 2.2em; }
    #card p { font-size: 1.05em; line-height: 1.4; }
    
-   /* Redimensiona el girasol para teléfonos */
    .sunflower-decor {
       width: 55px;
       bottom: 10px;
