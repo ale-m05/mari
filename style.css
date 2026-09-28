@@ -1,70 +1,33 @@
 @import url('https://googleapis.com');
 @import url('https://googleapis.com');
 
-#card {
-   height:500px;
-   width:800px;
-   margin:5em auto;
-   position: fixed;
-   top: -15px;
-   left: 25%;
-   display:flex;
-   visibility:hidden;
-}
-#card h2 {
-   font-family: 'Playfair Display', serif; /* Tipo de letra cambiado */
-   font-size:3em;
-   margin:0;
-   color:pink;
-   text-align: center;
-}
-#card p {
-   font-family: 'Playfair Display', serif; /* Tipo de letra cambiado */
-   font-size: 1.4em;
-   text-align: justify;
-   padding-left: 30px; /* Espacio en blanco a la izquierda */
-   padding-right: 30px; /* Espacio en blanco a la derecha */
-}
-
-
-.side {
-   background:#eee;
-   height:550px;
-   width:400px;
-/*    border:1px solid red; */
-   padding:10px;
-}
-.side.one {
-   width:320px;
-   transform:skew(10deg,20deg);
-   background:linear-gradient(90deg, #fff, #fff 40%, #ddd);
-}
-.side.two {
-   transform:skew(10deg,-15deg);
-   background:linear-gradient(-90deg, #fff, #fff 40%, #f0f0f0);
-}
-
+/* --- CONFIGURACIÓN GENERAL --- */
 body {
    display: flex;
    align-items: center;
    justify-content: center;
-   height: 100vh;
+   min-height: 100vh;
    font-family: 'Sacramento', cursive;
    background-color: #f1e3d3;
-   overflow: hidden;
- }
- 
- .valentines-day {
+   overflow-x: hidden;
+   margin: 0;
+}
+
+/* --- ESTILOS DEL SOBRE DE SAN VALENTÍN --- */
+.valentines-day {
    position: relative;
    cursor: pointer;
- }
+   z-index: 5;
+   transform: scale(1);
+   transition: transform 0.3s ease;
+}
  
- .envelope {
+.envelope {
    position: relative;
    filter: drop-shadow(0 0 25px rgba(0,0,0,.3));
- }
+}
  
- .envelope:before {
+.envelope:before {
    content:"";
    position: absolute;
    width:254px;
@@ -74,9 +37,9 @@ body {
    border-radius: 0 15px 0 0;
    left:-37px;
    top:-82px;
- }
+}
  
- .envelope:after {
+.envelope:after {
    content:"";
    position: absolute;
    background-color: #ff9494;
@@ -84,9 +47,9 @@ body {
    height:225px;
    left:-90px;
    top:45px;
- }
+}
  
- .heart {
+.heart {
    position: relative;
    background-color: #e01911;
    display: inline-block;
@@ -97,26 +60,21 @@ body {
    width:180px;
    filter: drop-shadow(0 -10px 25px rgba(0,0,0,.3));
    transition: .5s;
- }
+}
    
- .heart:before, .heart:after {
+.heart:before, .heart:after {
    content:"";
    background-color: #e01911;
    border-radius:50%;
    height: 180px;
    width: 180px;
    position: absolute;
-   }
+}
    
- .heart:before {
-   top:-100px;
-   left:0;}
-   
- .heart:after {
-   left:100px;
-   top:0;}
+.heart:before { top:-100px; left:0; }
+.heart:after { left:100px; top:0; }
  
- .front {
+.front {
    position: absolute;
    width:0;
    height:0;
@@ -126,9 +84,9 @@ body {
    top:44px;
    left:80px;
    z-index:4;
- }
+}
  
- .front:before {
+.front:before {
    content:"";
    position: absolute;
    width:0;
@@ -138,9 +96,9 @@ body {
    border-bottom: 113px solid transparent;
    top:-113px;
    left:-170px;
- }
+}
  
- .front:after {
+.front:after {
    width:0;
    height:0;
    position: absolute;
@@ -150,11 +108,12 @@ body {
    border-left: 180px solid transparent;
    top:-36px;
    left:-170px;
- }
+}
  
- .text {
+.text {
    position: absolute;
-   font-family: arial;
+   font-family: Arial, sans-serif;
+   font-size: 11px;
    letter-spacing:5px;
    text-align: center;
    color: white;
@@ -162,30 +121,148 @@ body {
    top:80px;
    left:15px;
    transition: .5s;
- }
+}
  
- .valentines-day:hover .heart {
-   transform: translateY(-50px) rotate(-45deg);
- }
- 
- .valentines-day:hover .text {
-   transform: translateY(-50px);
- }
-/* Asegura que la página sea la guía de posición */
-.side.two {
+.valentines-day:hover .heart { transform: translateY(-50px) rotate(-45deg); }
+.valentines-day:hover .text { transform: translateY(-50px); }
+
+/* --- ESTILOS DE LA CARTA (PANTALLA GRANDE) --- */
+#card {
+   height: 520px;
+   width: 820px;
+   position: fixed;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%) scale(0.1);
+   display: flex;
+   visibility: hidden; 
+   opacity: 0;         
+   z-index: 10;
+   box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+   transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.8s ease;
+}
+
+#card.open {
+   visibility: visible;
+   opacity: 1;
+   transform: translate(-50%, -50%) scale(1);
+}
+
+.side {
+   background: #fff;
+   height: 100%;
+   width: 410px;
+   padding: 35px 30px;
+   box-sizing: border-box;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
    position: relative;
 }
 
-/* Estilos para el Girasol en la esquina inferior derecha */
+.side.one {
+   width: 320px;
+   transform: skew(10deg,20deg);
+   background: linear-gradient(90deg, #fff, #fff 40%, #ddd);
+}
+
+.side.two {
+   transform: skew(10deg,-15deg);
+   background: linear-gradient(-90deg, #fff, #fff 40%, #f0f0f0);
+}
+
+#card h2 {
+   font-family: 'Playfair Display', serif;
+   font-size: 3em;
+   margin: 0;
+   color: pink;
+   text-align: center;
+}
+
+#card p {
+   font-family: 'Playfair Display', serif;
+   font-size: 1.15em;
+   line-height: 1.45;
+   text-align: justify;
+   color: #333;
+   margin: 6px 0;
+}
+
+#card .signature {
+   text-align: right;
+   font-size: 1.3em;
+   color: #ff4747;
+   margin-top: 15px;
+   font-weight: bold;
+}
+
+/* POSICIONAMIENTO DEL GIRASOL EN PC */
 .sunflower-decor {
    position: absolute;
-   bottom: 10px;       /* Distancia desde el borde inferior */
-   right: 20px;        /* CAMBIADO A LA DERECHA: Distancia desde el borde derecho */
-   width: 75px;        /* Tamaño ideal para no tapar tu firma */
+   bottom: 15px;
+   right: 25px;
+   width: 70px;
    height: auto;
-   opacity: 0.95;      /* Excelente nitidez sobre el fondo blanco */
    pointer-events: none;
+   z-index: 2;
+}
+
+/* --- ANIMACIONES DE CAÍDA DEL SOBRE --- */
+@keyframes fall {
+  0% { transform: translateY(0px); opacity: 1; }
+  100% { transform: translateY(350px); opacity: 0; }
+}
+
+/* ==========================================================================
+   DISEÑO ADAPTABLE PARA CUALQUIER SMARTPHONE (IPHONE / ANDROID)
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+   body {
+      align-items: flex-start;
+      overflow-y: auto;
+      padding: 30px 15px;
+      box-sizing: border-box;
+   }
+
+   /* Reduce el tamaño del sobre en teléfonos */
+   .valentines-day {
+      transform: scale(0.72) translateY(30px);
+   }
+
+   /* Convierte las páginas de horizontal a vertical */
+   #card {
+      width: 95%;
+      height: auto;
+      flex-direction: column;
+      position: relative;
+      top: 0;
+      left: 0;
+      transform: scale(0.1);
+      margin: 0 auto;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+   }
+
+   #card.open {
+      transform: scale(1);
+   }
+
+   .side {
+      width: 100% !important;
+      height: auto !important;
+      transform: none !important; /* Quita inclinaciones oblicuas en el celular */
+      padding: 25px 20px;
+      background: #ffffff !important;
+      border-radius: 8px;
+      margin-bottom: 12px;
+   }
+
+   #card h2 { font-size: 2.2em; margin-bottom: 5px; }
+   #card p { font-size: 1.05em; line-height: 1.4; }
    
-   /* Se inclina y gira levemente para acompañar la perspectiva del libro */
-   transform: rotate(15deg); 
+   /* Redimensiona el girasol para teléfonos */
+   .sunflower-decor {
+      width: 55px;
+      bottom: 10px;
+      right: 15px;
+   }
 }
